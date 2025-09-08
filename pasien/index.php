@@ -48,11 +48,13 @@
                                     #4. melakukan looping data pasien
                                     $nomor = 1;
                                     foreach($result as $row){
+                                        $tgl_lahir = date_create($row['Tanggal_LahirPasien']);
+                                        $tgl_lahir = date_format($tgl_lahir,'D, d F Y')
                                 ?>
                                 <tr>
                                     <th scope="row"><?=$nomor++?></th>
                                     <td><?=$row['Nama_pasienKlinik']?></td>
-                                    <td><?=$row['Tanggal_LahirPasien']?></td>
+                                    <td><?=$tgl_lahir?></td>
                                     <td><?=$row['Jenis_KelaminPasien']?></td>
                                     <td><?=$row['Alamat_Pasien']?></td>
                                     <td>
