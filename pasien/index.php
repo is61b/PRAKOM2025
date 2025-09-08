@@ -22,7 +22,7 @@
                         <b>Data Pasien</b>
                     </div>
                     <div class="card-body">
-                        <a href="" class="btn btn-primary">Tambah Data</a>
+                        <a href="form.php" class="btn btn-primary">Tambah Data</a>
                         <table class="table mt-3 table-striped ">
                             <thead>
                                 <tr class="table-success">
