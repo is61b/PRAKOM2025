@@ -16,3 +16,5 @@ VALUES('$nama','$tgl_lahir','$jk','$alamat')");
 #5. pengalihan halaman jika proses tambah selesai
 header("location:index.php");
 ?>
+
+<!-- tambahkan validasi minimal tanggal lahir lebih kecil dari hari ini, jika gagal kembalikan ke form.php dan berikan pesan error -->

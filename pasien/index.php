@@ -36,34 +36,59 @@
                             </thead>
                             <tbody>
                                 <?php
-                                    #1. koneksi
-                                    include('../koneksi.php');
+                                #1. koneksi
+                                include('../koneksi.php');
 
-                                    #2. menuliskan query
-                                    $qry = "SELECT * FROM pasien";
+                                #2. menuliskan query
+                                $qry = "SELECT * FROM pasien";
 
-                                    #3. menjalankan query
-                                    $result = mysqli_query($koneksi,$qry);    
-                                    
-                                    #4. melakukan looping data pasien
-                                    $nomor = 1;
-                                    foreach($result as $row){
-                                        $tgl_lahir = date_create($row['Tanggal_LahirPasien']);
-                                        $tgl_lahir = date_format($tgl_lahir,'D, d F Y')
-                                ?>
-                                <tr>
-                                    <th scope="row"><?=$nomor++?></th>
-                                    <td><?=$row['Nama_pasienKlinik']?></td>
-                                    <td><?=$tgl_lahir?></td>
-                                    <td><?=$row['Jenis_KelaminPasien']?></td>
-                                    <td><?=$row['Alamat_Pasien']?></td>
-                                    <td>
-                                        <a href="" class="btn btn-info btn-sm">edit</a>
-                                        <a href="" class="btn btn-danger btn-sm">hapus</a>
-                                    </td>
-                                </tr>
-                                <?php
-                                    }
+                                #3. menjalankan query
+                                $result = mysqli_query($koneksi, $qry);
+
+                                #4. melakukan looping data pasien
+                                $nomor = 1;
+                                foreach ($result as $row) {
+                                    $tgl_lahir = date_create($row['Tanggal_LahirPasien']);
+                                    $tgl_lahir = date_format($tgl_lahir, 'D, d F Y')
+                                        ?>
+                                    <tr>
+                                        <th scope="row"><?= $nomor++ ?></th>
+                                        <td><?= $row['Nama_pasienKlinik'] ?></td>
+                                        <td><?= $tgl_lahir ?></td>
+                                        <td><?= $row['Jenis_KelaminPasien'] ?></td>
+                                        <td><?= $row['Alamat_Pasien'] ?></td>
+                                        <td>
+                                            <a href="" class="btn btn-info btn-sm">edit</a>
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal<?=$row['pasienKlinik_ID'] ?>">
+                                                Hapus
+                                            </button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal<?=$row['pasienKlinik_ID'] ?>" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Peringatan
+                                                            </h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Yakin data pasien <b><?= $row['Nama_pasienKlinik'] ?></b> ingin dihapus?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Batal</button>
+                                                            <a href="hapus.php?id=<?=$row['pasienKlinik_ID'] ?>" class="btn btn-danger">Hapus</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
                                 ?>
                             </tbody>
                         </table>
