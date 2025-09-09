@@ -40,7 +40,7 @@
                                 include('../koneksi.php');
 
                                 #2. menuliskan query
-                                $qry = "SELECT * FROM pasien";
+                                $qry = "SELECT * FROM pasien ORDER BY Nama_pasienKlinik ASC";
 
                                 #3. menjalankan query
                                 $result = mysqli_query($koneksi, $qry);
