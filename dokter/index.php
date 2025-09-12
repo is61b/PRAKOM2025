@@ -38,7 +38,7 @@
                                 include('../koneksi.php');
 
                                 #2. menuliskan query
-                                $qry = "SELECT * FROM dokter INNER JOIN poli ON dokter.Poli_ID = poli.Poli_ID";
+                                $qry = "SELECT * FROM dokter INNER JOIN poli ON dokter.Poli_ID = poli.Poli_ID ORDER BY dokter.Dokter_ID ASC";
 
                                 #3. menjalankan query
                                 $result = mysqli_query($koneksi, $qry);
@@ -59,7 +59,7 @@
                                                 Hapus
                                             </button>
                                             <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal<?=$row['DokterKlinik_ID'] ?>" tabindex="-1"
+                                            <div class="modal fade" id="exampleModal<?=$row['Dokter_ID'] ?>" tabindex="-1"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -70,12 +70,12 @@
                                                                 aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Yakin data Dokter <b><?= $row['Nama_DokterKlinik'] ?></b> ingin dihapus?
+                                                            Yakin data Dokter <b><?= $row['Nama_Dokter'] ?></b> ingin dihapus?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-bs-dismiss="modal">Batal</button>
-                                                            <a href="hapus.php?id=<?=$row['DokterKlinik_ID'] ?>" class="btn btn-danger">Hapus</a>
+                                                            <a href="hapus.php?id=<?=$row['Dokter_ID'] ?>" class="btn btn-danger">Hapus</a>
                                                         </div>
                                                     </div>
                                                 </div>
