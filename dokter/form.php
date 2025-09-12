@@ -19,31 +19,32 @@
             <div class="col-10 m-auto mt-5">
                 <div class="card">
                     <div class="card-header">
-                        <b>Form Tambah Data Pasien</b>
+                        <b>Form Tambah Data Dokter</b>
                     </div>
                     <div class="card-body">
                         <form method="post" action="proses_form.php">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Nama Pasien</label>
-                                <input name="nama" placeholder="Masukkan nama Lengkap" type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp">
+                                <label for="exampleInputEmail1" class="form-label">Nama Dokter</label>
+                                <input name="nama" placeholder="Masukkan nama Lengkap" type="text" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div>
+
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Tanggal Lahir</label>
-                                <input name="tgl" type="date" class="form-control" id="exampleInputPassword1">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Jenis Kelamin</label>
-                                <select name="jk" class="form-select" aria-label="Default select example">
-                                    <option selected>Pilih Jenis Kelamin</option>
-                                    <option value="Laki-Laki">Laki-Laki</option>
-                                    <option value="Perempuan">Perempuan</option>
+                                <label for="exampleInputPassword1" class="form-label">Nama Poli</label>
+                                <select name="poli" class="form-select" aria-label="Default select example">
+                                    <option selected>Pilih Poli</option>
+                                    <?php
+                                        include('../koneksi.php');
+                                        $qry = mysqli_query($koneksi,"SELECT * FROM poli");
+                                        foreach ($qry as $row) {
+                                            ?>
+                                            <option value="<?=$row['Poli_ID']?>"><?=$row['Nama_Poli']?></option>
+                                            <?php
+                                        }
+                                    ?>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Alamat</label>
-                                <input name="alamat" type="text" placeholder="Masukkan Alamat Lengkap" class="form-control" id="exampleInputPassword1">
-                            </div>
+
 
                             <button type="submit" class="btn btn-primary">Tambah</button>
                         </form>

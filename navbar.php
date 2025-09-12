@@ -13,7 +13,7 @@
                 </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/PRAKOM2025/pasien/index.php">Data Pasien</a></li>
-                        <li><a class="dropdown-item" href="#">Data Dokter</a></li>
+                        <li><a class="dropdown-item" href="/PRAKOM2025/dokter/index.php">Data Dokter</a></li>
                         <li><a class="dropdown-item" href="#">Data Poli</a></li>
                         <li><a class="dropdown-item" href="#">Berobat</a></li>
                     </ul>
