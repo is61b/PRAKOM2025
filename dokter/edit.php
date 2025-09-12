@@ -8,15 +8,13 @@ include("../koneksi.php");
 $id = $_GET["id"];
 
 #3. menjalankan query hapus
-$qry = mysqli_query($koneksi,"SELECT * FROM pasien WHERE pasienKlinik_ID = '$id'");
+$qry = mysqli_query($koneksi,"SELECT * FROM dokter WHERE Dokter_ID = '$id'");
 
 #4. memisahkan field/kolom tabel pasien menjadi data array
 $row = mysqli_fetch_array($qry);
 
-$nama = $row["Nama_pasienKlinik"];
-$tgl_lahir = $row["Tanggal_LahirPasien"];
-$jk = $row["Jenis_KelaminPasien"];
-$alamat = $row["Alamat_Pasien"];
+$nama = $row["Nama_Dokter"];
+$poli = $row["Poli_ID"];
 
 ?>
 <!DOCTYPE html>
@@ -40,33 +38,31 @@ $alamat = $row["Alamat_Pasien"];
             <div class="col-10 m-auto mt-5">
                 <div class="card">
                     <div class="card-header">
-                        <b>Form Edit Data Pasien</b>
+                        <b>Form Edit Data Dokter</b>
                     </div>
                     <div class="card-body">
                         <form method="post" action="proses_edit.php">
-                            <input type="hidden" value="<?=$id?>" name="idedit" id="">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Nama Pasien</label>
-                                <input name="nama" value="<?=$nama?>" placeholder="Masukkan nama Lengkap" type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Tanggal Lahir</label>
-                                <input value="<?=$tgl_lahir?>" name="tgl" type="date" class="form-control" id="exampleInputPassword1">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Jenis Kelamin</label>
-                                <select name="jk" class="form-select" aria-label="Default select example">
-                                    <option selected>Pilih Jenis Kelamin</option>
-                                    <option value="Laki-Laki" <?=($jk=="Laki-Laki") ? 'selected' : ''?>>Laki-Laki</option>
-                                    <option value="Perempuan" <?=($jk=="Perempuan") ? 'selected' : ''?>>Perempuan</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Alamat</label>
-                                <input name="alamat" value="<?=$alamat?>" type="text" placeholder="Masukkan Alamat Lengkap" class="form-control" id="exampleInputPassword1">
+                                <label for="exampleInputEmail1" class="form-label">Nama Dokter</label>
+                                <input value="<?=$nama?>" name="nama" placeholder="Masukkan nama Lengkap" type="text" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div>
 
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Nama Poli</label>
+                                <select name="poli" class="form-select" aria-label="Default select example">
+                                    <option >Pilih Poli</option>
+                                    <?php
+                                        include('../koneksi.php');
+                                        $qry = mysqli_query($koneksi,"SELECT * FROM poli");
+                                        foreach ($qry as $row) {
+                                            ?>
+                                            <option <?php echo ($poli==$row['Poli_ID']) ? 'selected' : '' ?> value="<?=$row['Poli_ID']?>"><?=$row['Nama_Poli']?></option>
+                                            <?php
+                                        }
+                                    ?>
+                                </select>
+                            </div>
                             <button type="submit" class="btn btn-primary">Edit</button>
                         </form>
 
