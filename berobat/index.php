@@ -16,7 +16,7 @@
     <div class="container">
         <!-- disini kontennya -->
         <div class="row">
-            <div class="col-10 m-auto mt-5">
+            <div class="col-12 m-auto mt-5">
                 <div class="card">
                     <div class="card-header">
                         <b>Data Berobat</b>
@@ -26,10 +26,16 @@
                         <table class="table mt-3 table-striped ">
                             <thead>
                                 <tr class="table-success">
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nama Dokter</th>
+                                    <th scope="col">No Transaksi</th>
+                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Usia</th>
+                                    <th scope="col">Jenis Kelamin</th>
+                                    <th scope="col">Keluhan</th>
                                     <th scope="col">Nama Poli</th>
-                                    <th scope="col">Aksi</th>
+                                    <th scope="col">Dokter</th>
+                                    <th scope="col">Biaya Administrasi</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,7 +44,10 @@
                                 include('../koneksi.php');
 
                                 #2. menuliskan query
-                                $qry = "SELECT * FROM dokter INNER JOIN poli ON dokter.Poli_ID = poli.Poli_ID ORDER BY dokter.Dokter_ID ASC";
+                                $qry = "SELECT * FROM berobat 
+                                INNER JOIN pasien ON berobat.PasienKlinik_ID=pasien.pasienKlinik_ID
+                                INNER JOIN dokter ON berobat.Dokter_ID=dokter.Dokter_ID
+                                INNER JOIN poli ON dokter.Poli_ID=poli.Poli_ID";
 
                                 #3. menjalankan query
                                 $result = mysqli_query($koneksi, $qry);
@@ -46,21 +55,36 @@
                                 #4. melakukan looping data Dokter
                                 $nomor = 1;
                                 foreach ($result as $row) {
-                                    
-                                        ?>
+                                    //memformat ulang tanggal berobat
+                                    $tgl_berobat = date_create($row['Tanggal_Berobat']);
+                                    $tgl_berobat = date_format($tgl_berobat, 'd/m/Y');
+
+                                    //membuat usia pasien
+                                    $tanggal_lahir = new DateTime($row['Tanggal_LahirPasien']);
+                                    $sekarang = new DateTime("today");
+                                    $usia = $sekarang->diff($tanggal_lahir)->y;
+
+                                    ?>
                                     <tr>
-                                        <th scope="row"><?= $nomor++ ?></th>
-                                        <td><?= $row['Nama_Dokter'] ?></td>
+                                        <td><?= $row['No_Transaksi'] ?></td>
+                                        <td><?= $tgl_berobat ?></td>
+                                        <td><?= $row['Nama_pasienKlinik'] ?></td>
+                                        <td><?= $usia ?></td>
+                                        <td><?= $row['Jenis_KelaminPasien'] ?></td>
+                                        <td><?= $row['Keluhan_Pasien'] ?></td>
                                         <td><?= $row['Nama_Poli'] ?></td>
+                                        <td><?= $row['Nama_Dokter'] ?></td>
+                                        <td><?= $row['Biaya_Adm'] ?></td>
                                         <td>
-                                            <a href="edit.php?id=<?=$row['Dokter_ID'] ?>" class="btn btn-info btn-sm">edit</a>
+                                            <a href="edit.php?id=<?= $row['Dokter_ID'] ?>"
+                                                class="btn btn-info btn-sm">edit</a>
                                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal<?=$row['Dokter_ID'] ?>">
+                                                data-bs-target="#exampleModal<?= $row['No_Transaksi'] ?>">
                                                 Hapus
                                             </button>
                                             <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal<?=$row['Dokter_ID'] ?>" tabindex="-1"
-                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="exampleModal<?= $row['No_Transaksi'] ?>"
+                                                tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -70,12 +94,14 @@
                                                                 aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Yakin data Dokter <b><?= $row['Nama_Dokter'] ?></b> ingin dihapus?
+                                                            Yakin data Dokter <b><?= $row['No_Transaksi'] ?></b> ingin
+                                                            dihapus?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-bs-dismiss="modal">Batal</button>
-                                                            <a href="hapus.php?id=<?=$row['Dokter_ID'] ?>" class="btn btn-danger">Hapus</a>
+                                                            <a href="hapus.php?id=<?= $row['No_Transaksi'] ?>"
+                                                                class="btn btn-danger">Hapus</a>
                                                         </div>
                                                     </div>
                                                 </div>
