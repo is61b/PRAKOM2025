@@ -64,6 +64,10 @@
                                     $sekarang = new DateTime("today");
                                     $usia = $sekarang->diff($tanggal_lahir)->y;
 
+                                    //memformat biaya menjadi rupiah dan ada pemisah ribuan
+                                    $biaya_adm = $row['Biaya_Adm'];
+                                    $biaya_adm = number_format($biaya_adm,0,',','.');
+
                                     ?>
                                     <tr>
                                         <td><?= $row['No_Transaksi'] ?></td>
@@ -74,9 +78,9 @@
                                         <td><?= $row['Keluhan_Pasien'] ?></td>
                                         <td><?= $row['Nama_Poli'] ?></td>
                                         <td><?= $row['Nama_Dokter'] ?></td>
-                                        <td><?= $row['Biaya_Adm'] ?></td>
+                                        <td>Rp <?= $biaya_adm ?></td>
                                         <td>
-                                            <a href="edit.php?id=<?= $row['Dokter_ID'] ?>"
+                                            <a href="edit.php?id=<?= $row['No_Transaksi'] ?>"
                                                 class="btn btn-info btn-sm">edit</a>
                                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal<?= $row['No_Transaksi'] ?>">
@@ -94,7 +98,7 @@
                                                                 aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Yakin data Dokter <b><?= $row['No_Transaksi'] ?></b> ingin
+                                                            Yakin data Transaksi <b><?= $row['No_Transaksi'] ?></b> ingin
                                                             dihapus?
                                                         </div>
                                                         <div class="modal-footer">
