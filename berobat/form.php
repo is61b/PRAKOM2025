@@ -64,17 +64,19 @@
                                             <select class="form-control" name="bln" id="">
                                                 <option value="">Pilih Bulan</option>
                                                 <?php
-                                                $bulan = array(1=>'Januari',2=>'Februari','','','','',
-                                                    for( $i= 1; $i<= 31; $i++ ) {
-                                                        ?>
-                                                        <option value="<?=$i?>"><?=$i?></option>
-                                                        <?php
-                                                    }
+                                                $bulan = array(1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',
+                                                8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember');
+                                                
+                                                foreach($bulan as $k => $v) {
+                                                    ?>
+                                                    <option value="<?=$k?>"><?=$v?></option>
+                                                    <?php
+                                                }
                                                 ?>
                                             </select>
                                         </div>
                                         <div class="col-4">
-                                            select 3
+                                            <input type="number" class="form-control" name="thn" placeholder="Masukkan Tahun" id="">
                                         </div>
                                 </div>
                             </div>
