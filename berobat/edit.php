@@ -8,13 +8,17 @@ include("../koneksi.php");
 $id = $_GET["id"];
 
 #3. menjalankan query hapus
-$qry = mysqli_query($koneksi,"SELECT * FROM dokter WHERE Dokter_ID = '$id'");
+$qry = mysqli_query($koneksi, "SELECT * FROM berobat WHERE No_Transaksi = '$id'");
 
 #4. memisahkan field/kolom tabel pasien menjadi data array
 $row = mysqli_fetch_array($qry);
 
-$nama = $row["Nama_Dokter"];
-$poli = $row["Poli_ID"];
+$trans = $row["No_Transaksi"];
+$pasien = $row["PasienKlinik_ID"];
+$tgl_berobat = $row["Tanggal_Berobat"];
+$dokter = $row["Dokter_ID"];
+$keluhan = $row["Keluhan_Pasien"];
+$biaya = $row["Biaya_Adm"];
 
 ?>
 <!DOCTYPE html>
@@ -41,30 +45,106 @@ $poli = $row["Poli_ID"];
                         <b>Form Edit Data Dokter</b>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="proses_edit.php">
-                            <input type="hidden" name="idedit" value="<?=$id?>">
+                        <form method="post" action="proses_form.php">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Nama Dokter</label>
-                                <input value="<?=$nama?>" name="nama" placeholder="Masukkan nama Lengkap" type="text" class="form-control"
-                                    id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <label for="exampleInputEmail1" class="form-label">No Transaksi</label>
+                                <input value="<?=$trans?>" readonly name="trans" type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
                             </div>
 
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Nama Poli</label>
-                                <select name="poli" class="form-select" aria-label="Default select example">
-                                    <option >Pilih Poli</option>
+                                <label for="exampleInputPassword1" class="form-label">Nama Pasien</label>
+                                <select name="pasien" class="form-select" aria-label="Default select example">
+                                    <option selected>Pilih Pasien</option>
                                     <?php
-                                        include('../koneksi.php');
-                                        $qry = mysqli_query($koneksi,"SELECT * FROM poli");
-                                        foreach ($qry as $row) {
-                                            ?>
-                                            <option <?php echo ($poli==$row['Poli_ID']) ? 'selected' : '' ?> value="<?=$row['Poli_ID']?>"><?=$row['Nama_Poli']?></option>
-                                            <?php
-                                        }
+                                    include('../koneksi.php');
+                                    $qry = mysqli_query($koneksi, "SELECT * FROM pasien");
+                                    foreach ($qry as $row) {
+                                        ?>
+                                        <option <?php echo ($pasien==$row['pasienKlinik_ID']) ? 'selected' : '' ?> value="<?= $row['pasienKlinik_ID'] ?>"><?= $row['Nama_pasienKlinik'] ?></option>
+                                        <?php
+                                    }
                                     ?>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Edit</button>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Tanggal Berobat</label>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <select class="form-control" name="tgl" id="">
+                                            <option value="">Pilih Tanggal</option>
+                                            <?php
+                                            for ($i = 1; $i <= 31; $i++) {
+                                                ?>
+                                                <option value="<?= $i ?>"><?= $i ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <select class="form-control" name="bln" id="">
+                                            <option value="">Pilih Bulan</option>
+                                            <?php
+                                            $bulan = array(
+                                                1 => 'Januari',
+                                                2 => 'Februari',
+                                                3 => 'Maret',
+                                                4 => 'April',
+                                                5 => 'Mei',
+                                                6 => 'Juni',
+                                                7 => 'Juli',
+                                                8 => 'Agustus',
+                                                9 => 'September',
+                                                10 => 'Oktober',
+                                                11 => 'November',
+                                                12 => 'Desember'
+                                            );
+
+                                            foreach ($bulan as $k => $v) {
+                                                ?>
+                                                <option value="<?= $k ?>"><?= $v ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="number" class="form-control" name="thn"
+                                            placeholder="Masukkan Tahun" id="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Nama Dokter</label>
+                                <select name="dokter" class="form-select" aria-label="Default select example">
+                                    <option selected>Pilih Dokter</option>
+                                    <?php
+                                    include('../koneksi.php');
+                                    $qry = mysqli_query($koneksi, "SELECT * FROM dokter");
+                                    foreach ($qry as $row) {
+                                        ?>
+                                        <option <?php echo ($dokter==$row['Dokter_ID']) ? 'selected' : '' ?> value="<?= $row['Dokter_ID'] ?>"><?= $row['Nama_Dokter'] ?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Keluhan Pasien</label>
+                                <input value="<?=$keluhan?>" name="keluhan" type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Biaya Administrasi</label>
+                                <input value="<?=$biaya?>" name="biaya" type="number" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Tambah</button>
                         </form>
 
                     </div>
