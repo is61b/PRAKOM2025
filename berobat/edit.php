@@ -51,7 +51,7 @@ $biaya = $row["Biaya_Adm"];
                         <b>Form Edit Data Berobat</b>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="proses_form.php">
+                        <form method="post" action="proses_edit.php">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">No Transaksi</label>
                                 <input value="<?=$trans?>" readonly name="trans" type="text" class="form-control" id="exampleInputEmail1"
@@ -110,7 +110,7 @@ $biaya = $row["Biaya_Adm"];
 
                                             foreach ($bulan as $k => $v) {
                                                 ?>
-                                                <option value="<?= $k ?>"><?= $v ?></option>
+                                                <option <?php echo ($bln==$k) ? 'selected' : '' ?> value="<?= $k ?>"><?= $v ?></option>
                                                 <?php
                                             }
                                             ?>
