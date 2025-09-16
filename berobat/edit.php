@@ -15,7 +15,13 @@ $row = mysqli_fetch_array($qry);
 
 $trans = $row["No_Transaksi"];
 $pasien = $row["PasienKlinik_ID"];
+
 $tgl_berobat = $row["Tanggal_Berobat"];
+$pecah_tgl = explode("-", $tgl_berobat);
+$thn = $pecah_tgl[0];
+$bln = $pecah_tgl[1];
+$tgl = $pecah_tgl[2];
+
 $dokter = $row["Dokter_ID"];
 $keluhan = $row["Keluhan_Pasien"];
 $biaya = $row["Biaya_Adm"];
@@ -42,7 +48,7 @@ $biaya = $row["Biaya_Adm"];
             <div class="col-10 m-auto mt-5">
                 <div class="card">
                     <div class="card-header">
-                        <b>Form Edit Data Dokter</b>
+                        <b>Form Edit Data Berobat</b>
                     </div>
                     <div class="card-body">
                         <form method="post" action="proses_form.php">
@@ -77,7 +83,7 @@ $biaya = $row["Biaya_Adm"];
                                             <?php
                                             for ($i = 1; $i <= 31; $i++) {
                                                 ?>
-                                                <option value="<?= $i ?>"><?= $i ?></option>
+                                                <option <?php echo ($tgl==$i) ? 'selected' : '' ?> value="<?= $i ?>"><?= $i ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -111,7 +117,7 @@ $biaya = $row["Biaya_Adm"];
                                         </select>
                                     </div>
                                     <div class="col-4">
-                                        <input type="number" class="form-control" name="thn"
+                                        <input value="<?=$thn?>" type="number" class="form-control" name="thn"
                                             placeholder="Masukkan Tahun" id="">
                                     </div>
                                 </div>
