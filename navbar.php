@@ -26,7 +26,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">List Pasien</a></li>
                         <li><a class="dropdown-item" href="#">List Dokter</a></li>
-                        <li><a class="dropdown-item" href="#">List Data Berobat</a></li>
+                        <li><a class="dropdown-item" href="/PRAKOM2025/berobat/laporan.php">List Data Berobat</a></li>
                     </ul>
                 </li>
                 
